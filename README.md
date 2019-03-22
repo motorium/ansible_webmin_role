@@ -47,7 +47,7 @@ Including an example of how to use your role (for instance, with variables passe
          install_utilities: True
 
       roles:
-      - semu.webmin
+      - semuadmin.webmin
 ```
      
 License
