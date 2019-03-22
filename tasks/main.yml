@@ -8,7 +8,7 @@
       permanent: yes
       state: enabled
       immediate: yes
-    when: firewalld_enable 
+    when: firewalld_enable
 
   - name: Add yum repository and gpg key
     yum_repository:
@@ -18,7 +18,7 @@
       mirrorlist: "{{ webmin_mirrorlist }}"
       gpgkey: "{{ webmin_gpgkey }}"
       gpgcheck: True
-  
+
   - name: Install Webmin
     package:
       name:
@@ -36,13 +36,13 @@
         - smartmontools
       state: present
     when: install_utilities
-      
+
   - name: Configure Webmin systemd service
     copy:
       src:   webmin.service.txt
       dest:  /etc/systemd/system/webmin.service
       mode: 0755
-          
+        
   - name: Stop running instance before restarting under systemd
     command: /etc/webmin/stop
     notify: restart webmin
