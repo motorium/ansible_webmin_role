@@ -1,52 +1,48 @@
 ---
 # tasks file for webmin#
 
-  - name: Add firewall rule if required
-    firewalld:
-      port: 10000/tcp
-      zone: public
-      permanent: yes
-      state: enabled
-      immediate: yes
-    when: firewalld_enable
+- name: Add firewall rule if required
+  firewalld:
+    port: 10000/tcp
+    zone: public
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: firewalld_enable
 
-  - name: Add yum repository and gpg key
-    yum_repository:
-      name: webmin
-      description: Webmin yum repo
-      baseurl: "{{ webmin_baseurl }}"
-      mirrorlist: "{{ webmin_mirrorlist }}"
-      gpgkey: "{{ webmin_gpgkey }}"
-      gpgcheck: True
+- name: Add yum repository and gpg key
+  yum_repository:
+    name: webmin
+    description: Webmin yum repo
+    baseurl: "{{ webmin_baseurl }}"
+    mirrorlist: "{{ webmin_mirrorlist }}"
+    gpgkey: "{{ webmin_gpgkey }}"
+    gpgcheck: True
 
-  - name: Install Webmin
-    package:
-      name:
-        - webmin
-      state: present
-    register: webmin_install
+- name: Install Webmin
+  package:
+    name:
+    - webmin
+    state: present
+  register: webmin_install
 
-  - name: Install supporting packages if required
-    package:
-      name:
-        - wget
-        - git
-        - ntpdate
-        - sntp
-        - smartmontools
-      state: present
-    when: install_utilities
+- name: Install supporting packages if required
+  package:
+    name:
+    - wget
+    - git
+    - ntpdate
+    - sntp
+    - smartmontools
+    state: present
+  when: install_utilities
 
-  - name: Configure Webmin systemd service
-    copy:
-      src:   webmin.service.txt
-      dest:  /etc/systemd/system/webmin.service
-      mode: 0755
-        
-  - name: Stop running instance before restarting under systemd
-    command: /etc/webmin/stop
-    notify: restart webmin
+- name: Configure Webmin systemd service
+  copy:
+    src:   webmin.service.txt
+    dest:  /etc/systemd/system/webmin.service
+    mode: 0755
 
-
-
-
+- name: Stop running instance before restarting under systemd
+  command: /etc/webmin/stop
+  notify: restart webmin
