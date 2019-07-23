@@ -4,5 +4,6 @@
 - name: restart webmin
   systemd:
     name: webmin
+    enabled: true
     state: restarted
     daemon_reload: yes
