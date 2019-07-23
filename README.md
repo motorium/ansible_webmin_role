@@ -44,6 +44,7 @@ Including an example of how to use your role (for instance, with variables passe
       become_user: root
       
       vars:
+         firewalld_enable: False
          install_utilities: True
 
       roles:
