@@ -6,8 +6,8 @@ Conflicts=shutdown.target
 [Service] 
 Type=oneshot
 RemainAfterExit=yes 
-ExecStart=/etc/webmin/start 
-ExecStop=/etc/webmin/stop 
-ExecReload=/etc/webmin/reload 
+ExecStart={{ webmin_dir }}/start 
+ExecStop={{ webmin_dir }}/stop 
+ExecReload={{ webmin_dir }}/reload 
 [Install] 
 WantedBy=multi-user.target

@@ -38,11 +38,13 @@
   when: install_utilities
 
 - name: Configure Webmin systemd service
-  copy:
-    src:   webmin.service.txt
+  template:
+    src:   webmin.service.j2
     dest:  /etc/systemd/system/webmin.service
     mode: 0755
 
 - name: Stop running instance before restarting under systemd
   command: /etc/webmin/stop
+  register: webmin_service
+  changed_when: "'Stopping Webmin server' in webmin_service.stdout"
   notify: restart webmin

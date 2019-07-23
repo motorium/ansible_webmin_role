@@ -1,6 +1,7 @@
 ---
 # defaults file for webmin
 
+webmin_dir: /etc/webmin
 webmin_baseurl: http://download.webmin.com/download/yum
 webmin_mirrorlist: http://download.webmin.com/download/yum/mirrorlist
 webmin_gpgkey: http://www.webmin.com/jcameron-key.asc
