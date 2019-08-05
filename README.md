@@ -6,7 +6,7 @@ systemd service.
 
 Webmin service will be available on https://hostip:10000.
 
-Default login will be the credentials of the installer user.
+Default login will be the userid and password of the installer user.
 
 You may get a browser warning about Webmin's default self-sign SSL certificate.
 
