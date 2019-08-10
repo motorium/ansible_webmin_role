@@ -8,5 +8,6 @@ webmin_gpgkey: "http://www.webmin.com/jcameron-key.asc"
 
 webmin_apt_repo: "deb https://download.webmin.com/download/repository sarge contrib"
 
-firewalld_enable: False    
-install_utilities: False
+firewalld_enable: false    
+install_utilities: false
+uninstall_webmin: false

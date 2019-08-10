@@ -22,14 +22,12 @@ Requirements
 Role Variables
 --------------
 
-- `install_utilities`: False
-
-Set to True to install various utility packages used by Webmin management functions (wget, git, ntpdate, sntp, smartmontools).
+- `install_utilities`: false.  Set to True to install various utility packages used by Webmin management functions (wget, git, ntpdate, sntp, smartmontools).
 Note that some minimal distributions do not support all these tools out of the box and may require interactive installation.
 
-- `firewalld_enable`: False
+- `firewalld_enable`: false.  Set to True to open port 10000 via firewalld (assumes firewalld is running).
 
-Set to True to open port 10000 via firewalld (assumes firewalld is running).
+- `uninstall_webmin` : false.  Set to true to uninstall Webmin.
 
 Dependencies
 ------------
@@ -49,8 +47,8 @@ Including an example of how to use your role (for instance, with variables passe
       become_user: root
       
       vars:
-         firewalld_enable: False
-         install_utilities: False
+         firewalld_enable: true
+         install_utilities: true
 
       roles:
       - semuadmin.webmin
