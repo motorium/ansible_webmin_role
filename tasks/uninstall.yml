@@ -15,15 +15,15 @@
   with_items:
     - /etc/systemd/system/webmin.service
     - /etc/webmin
-
-- name: Remove firewall rule if added
+  
+- name: Disable firewalld service.
   firewalld:
-    port: 10000/tcp
     zone: public
+    service: webmin
     permanent: true
     state: disabled
     immediate: true
-  when: firewalld_enable
+  when: enable_firewalld
 
 - name: Remove yum repository for Redhat platforms
   yum_repository:

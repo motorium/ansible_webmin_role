@@ -10,6 +10,8 @@ Default login will be the userid and password of the installer user.
 
 You may get a browser warning about Webmin's default self-sign SSL certificate.
 
+System will reboot after installation.
+
 
 Requirements
 ------------
@@ -25,7 +27,7 @@ Role Variables
 - `install_utilities`: false.  Set to True to install various utility packages used by Webmin management functions (wget, git, ntpdate, sntp, smartmontools).
 Note that some minimal distributions do not support all these tools out of the box and may require interactive installation.
 
-- `firewalld_enable`: false.  Set to True to open port 10000 via firewalld (assumes firewalld is running).
+- `enable_firewalld`: false.  Set to True to open port 10000 via firewalld (assumes firewalld is installed and running).
 
 - `uninstall_webmin` : false.  Set to true to uninstall Webmin.
 
@@ -47,7 +49,7 @@ Including an example of how to use your role (for instance, with variables passe
       become_user: root
       
       vars:
-         firewalld_enable: true
+         enable_firewalld: true
          install_utilities: true
 
       roles:

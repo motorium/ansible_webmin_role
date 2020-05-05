@@ -1,16 +1,28 @@
 ---
 # tasks file for webmin#
 
-- name: Add firewall rule if required
+- name: Install firewalld service template.
+  template:
+    src: webmin.xml.j2
+    dest: "/etc/firewalld/services/webmin.xml"
+  when: enable_firewalld
+
+- name: Reload firewalld to register new service.
+  command: firewall-cmd --reload
+  register: firewall
+  changed_when: "'success' in firewall.stdout"
+  when: enable_firewalld
+
+- name: Enable firewalld service.
   firewalld:
-    port: 10000/tcp
     zone: public
+    service: webmin
     permanent: true
     state: enabled
     immediate: true
-  when: firewalld_enable
+  when: enable_firewalld
 
-- name: Add yum repository and gpg key for Redhat platforms
+- name: Add yum repository and gpg key for Redhat platforms.
   yum_repository:
     name: webmin
     description: Webmin yum repo
@@ -21,37 +33,37 @@
     state: present
   when: ansible_os_family == "RedHat"
 
-- name: Add a gpg key for Debian platforms
+- name: Add a gpg key for Debian platforms.
   apt_key:
     url: "{{ webmin_gpgkey }}"
     state: present
   when: ansible_os_family == "Debian"
 
-- name: Add apt repository for Debian platforms
+- name: Add apt repository for Debian platforms.
   apt_repository:
     repo: "{{ webmin_apt_repo }}"
     state: present
   when: ansible_os_family == "Debian"
 
-- name: Update apt cache for Debian platforms
+- name: Update apt cache for Debian platforms.
   apt:
     update_cache: true
   when: ansible_os_family == "Debian"
 
-- name: Install https transport for Debian platforms
+- name: Install https transport for Debian platforms.
   package:
     name:
       - apt-transport-https
     state: present
   when: ansible_os_family == "Debian"
 
-- name: Install Webmin
+- name: Install Webmin.
   package:
     name:
       - webmin
     state: present
 
-- name: Install supporting packages if required
+- name: Install supporting packages if required.
   package:
     name:
       - wget
@@ -62,14 +74,24 @@
     state: present
   when: install_utilities
 
-- name: Configure Webmin systemd service
+- name: Configure Webmin systemd service.
   template:
     src: webmin.service.j2
     dest: /etc/systemd/system/webmin.service
     mode: 0755
 
-- name: Stop running instance before restarting under systemd
+- name: Stop running instance before restarting under systemd.
   command: /etc/webmin/stop
   register: webmin_service
   changed_when: "'Stopping Webmin server' in webmin_service.stdout"
-  notify: restart webmin
+
+- name: Enable webmin as systemd service.
+  systemd:
+    state: stopped
+    enabled: true
+    daemon_reload: true
+    name: webmin
+
+- name: Reboot machine.
+  reboot:
+    reboot_timeout: 3600

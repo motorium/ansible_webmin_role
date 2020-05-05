@@ -25,8 +25,10 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - xenial
+        - zesty
         - bionic
-
+        - disco
+        - focal
   galaxy_tags:
   - webmin
 
