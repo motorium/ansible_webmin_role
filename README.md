@@ -31,6 +31,8 @@ Note that some minimal distributions do not support all these tools out of the b
 
 - `uninstall_webmin` : false.  Set to true to uninstall Webmin.
 
+- `webmin_referers, webmin_port, webmin_ssl` For configuring to work with webserver
+
 Dependencies
 ------------
 

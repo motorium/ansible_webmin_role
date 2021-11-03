@@ -11,3 +11,7 @@ webmin_apt_repo: "deb https://download.webmin.com/download/repository sarge cont
 enable_firewalld: false
 install_utilities: false
 uninstall_webmin: false
+
+webmin_port: 10000
+webmin_referers: ""
+webmin_ssl: 1

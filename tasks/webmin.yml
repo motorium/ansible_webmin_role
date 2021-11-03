@@ -63,6 +63,23 @@
       - webmin
     state: present
 
+- name: Configure referers.
+  when: webmin_referers != ""
+  lineinfile:
+    path: /etc/webmin/config
+    line: "referers={{ webmin_referers }}"
+
+- name: Configure ssl.
+  when: webmin_ssl == 0
+  lineinfile:
+    path: /etc/webmin/miniserv.conf
+    line: "ssl={{ webmin_ssl }}"
+
+- name: Configure port.
+  lineinfile:
+    path: /etc/webmin/miniserv.conf
+    line: "port={{ webmin_port }}"
+
 - name: Install supporting packages if required.
   package:
     name:
